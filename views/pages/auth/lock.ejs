@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<head>
+    <% include ../../partials/auth/header.ejs %>
+</head>
+
+<body class="login-page">
+    <!-- Navbar -->
+    <% include ../../partials/auth/nav.ejs %>
+    <!-- End Navbar -->
+    <div class="wrapper wrapper-full-page ">
+        <div class="full-page lock-page section-image" filter-color="black"
+            data-image="../../assets/img/bg/bruno-abatti.jpg">
+            <!--   you can change the color of the filter page using: data-color="blue | green | orange | red | purple" -->
+            <div class="content">
+                <div class="container">
+                    <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+                        <div class="card card-lock text-center">
+                            <div class="card-header ">
+                                <img src="../../assets/img/faces/joe-gardner-2.jpg" alt="...">
+                            </div>
+                            <div class="card-body ">
+                                <h4 class="card-title">Joe Gardner</h4>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Enter Password..">
+                                </div>
+                            </div>
+                            <div class="card-footer ">
+                                <a href="#pablo" class="btn btn-outline-default btn-round">Unlock</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% include ../../partials/auth/footer.ejs %>
+        </div>
+    </div>
+    <% include ../../partials/auth/footer_js_core.ejs %>
+</body>
+
+</html>

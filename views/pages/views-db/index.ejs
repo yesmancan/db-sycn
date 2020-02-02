@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../partials/header.ejs %>
+</head>
+
+<body>
+  <div class="wrapper ">
+    <% include ../../partials/sidebar.ejs %>
+
+    <div class="main-panel ps-container ps-theme-default ps-active-y">
+      <!-- Navbar -->
+      <% include ../../partials/navbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <div class="row" id="data-row">
+              <div class="col-lg-3 col-md-4">
+                <div class="card card-pricing ">
+                  <div class="card-header">
+                    <h6 class="card-category"> ADD NEW DB</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="card-icon icon-primary ">
+                      <i class="nc-icon nc-spaceship"></i>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-9 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title">
+                            <input type="text" class="form-control" id="dbName" placeholder="Db Name"></h3>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-10 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title mt-auto" style="margin-top: 0!important;margin-bottom: 0!important;">
+                            <input type="text" class="form-control" id="dbConnectionString_user" placeholder="user">
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-10 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title mt-auto" style="margin-top: 0!important;margin-bottom: 0!important;">
+                            <input type="text" class="form-control" id="dbConnectionString_password"
+                              placeholder="password"></h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-10 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title mt-auto" style="margin-top: 0!important;margin-bottom: 0!important;">
+                            <input type="text" class="form-control" id="dbConnectionString_server" placeholder="server">
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-10 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title mt-auto" style="margin-top: 0!important;margin-bottom: 0!important;">
+                            <input type="text" class="form-control" id="dbConnectionString_database"
+                              placeholder="database"></h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <select class="selectpicker" data-size="2" id="dbType" data-style="btn btn-warning btn-round"
+                          title="Single Select">
+                          <option disabled selected>DB TYPE</option>
+                          <option value="MSSQL">MSSQL</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="card-footer">
+                    <button onclick="addNewDb()" class="btn btn-round btn-primary">CREATE</button>
+                  </div>
+                </div>
+              </div>
+              <% results.forEach(function(r) { %>
+              <div class="col-lg-3 col-md-4" data-id="<%= r._id %>">
+                <div class="card card-pricing">
+                  <div class="card-header">
+                    <div class="row">
+                      <h6 class="col-md-9 ml-auto mt-auto mb-auto text-left"><%= r.dbName %></h6>
+                      <div class="mb-auto mt-auto ml-auto mr-auto btn btn-danger btn-round btn-icon"
+                        onclick="deleteDb('<%= r._id %>')">
+                        <i class="nc-icon nc-simple-remove"></i>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="card-body">
+                    <div class="card-icon icon-primary ">
+                      <i class="nc-icon nc-spaceship"></i>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-10 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title mt-auto" style="margin-top: 0!important;margin-bottom: 0!important;">
+                            <input type="text" class="form-control" value="<%= r.DatabaseConfig.user %>"
+                              placeholder="user" readonly>
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-10 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title mt-auto" style="margin-top: 0!important;margin-bottom: 0!important;">
+                            <input type="text" class="form-control" value="<%= r.DatabaseConfig.password %>"
+                              placeholder="password" readonly>
+                            </h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-10 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title mt-auto" style="margin-top: 0!important;margin-bottom: 0!important;">
+                            <input type="text" class="form-control" placeholder="server"
+                              value="<%= r.DatabaseConfig.server %>" readonly>
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-10 mr-auto ml-auto">
+                        <div class="form-group">
+                          <h3 class="card-title mt-auto" style="margin-top: 0!important;margin-bottom: 0!important;">
+                            <input type="text" class="form-control" value="<%= r.DatabaseConfig.database %>"
+                              placeholder="database" readonly>
+                            </h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <select class="selectpicker" data-size="2" id="dbType" data-style="btn btn-warning btn-round"
+                          title="Single Select">
+                          <option disabled selected>DB TYPE</option>
+                          <option value="MSSQL">MSSQL</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="card-footer">
+                    <a href="/database/<%= r._id %>" class="btn btn-round btn-primary">Edit</a>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% include ../../partials/footer.ejs %>
+    </div>
+  </div>
+  <% include ../../partials/sidebar-background.ejs %>
+  <% include ../../partials/footer-js-core.ejs %>
+  <script src="/assets/js/enums.js" defer></script>
+  <script src="/assets/js/module.js" defer></script>
+  <script src="/assets/js/db/database-process.js" defer></script>
+
+</body>
+
+</html>
