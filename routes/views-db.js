@@ -29,10 +29,10 @@ router.get('/:dbId', async (req, res) => {
 });
 
 router.post('/api/init/:dbId', async (req, res) => {
-    const database = await Database.findOne({ _id: req.params.dbId, status: 1 });
+    let database = await Database.findOne({ _id: req.params.dbId, status: 1 });
     try {
         const result = await GetTableList(database.DatabaseConfig);
-        database = await ReLoadTable(result);
+        database = await ReLoadTable(result, database);
 
         Database.updateOne({ _id: req.params.dbId, status: 1 }, database, function (err, doc) {
             if (err) return res.send(500, { error: err });
@@ -105,7 +105,7 @@ const GetTableList = async (config) => {
     }
 }
 
-const ReLoadTable = async (result) => {
+const ReLoadTable = async (result, database) => {
     database.Tables = [];
     for (let i = 0; i < result.length; i++) {
         const element = result[i];
@@ -117,9 +117,13 @@ const ReLoadTable = async (result) => {
                 columns: [{
                     column_id: element.column_id,
                     column_name: element.column_name,
+                    column_isnull: element.column_isnull,
+                    column_lenght: element.column_lenght,
                     data_type: element.data_type,
                     max_length: element.max_length,
-                    precision: element.precision
+                    precision: element.precision,
+                    table_create_date: element.table_create_date,
+                    table_modify_date: element.table_modify_date
                 }]
             }
             database.Tables.push(_table);
@@ -127,11 +131,19 @@ const ReLoadTable = async (result) => {
             table[0].columns.push({
                 column_id: element.column_id,
                 column_name: element.column_name,
+                column_isnull: element.column_isnull,
+                column_lenght: element.column_lenght,
                 data_type: element.data_type,
                 max_length: element.max_length,
-                precision: element.precision
+                precision: element.precision,
+                table_create_date: element.table_create_date,
+                table_modify_date: element.table_modify_date
             });
         }
+    }
+    if (database.lastUpdate) {
+        database.lastUpdate = (new Date).toLocaleDateString() + ' ' + (new Date).toLocaleTimeString();
+        console.log(database.lastUpdate)
     }
     return database;
 }

@@ -65,48 +65,27 @@
         </div>
         <div class="row">
           <% results[0].Tables.forEach(function(table) { %>
-          <div class="col-md-6">
+          <div class="col-md-2">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"><%= table.schema_name %>.<%= table.table_name %></h4>
+                <h6 class="card-title mb-0 mt-0"><%= table.schema_name %>.<%= table.table_name %></h6>
               </div>
               <div class="card-body">
-                <div class="toolbar">
-                </div>
-
                 <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                   <thead>
                     <tr>
-                      <th>column_id</th>
-                      <th>column_name</th>
-                      <th>data_type</th>
-                      <th>max_length</th>
-                      <th>precision</th>
-                      <th>Actions</th>
+                      <th colspan="2">
+                        <h6 class="card-title mb-0 mt-0">Columns</h6>
+                      </th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>column_id</th>
-                      <th>column_name</th>
-                      <th>data_type</th>
-                      <th>max_length</th>
-                      <th>precision</th>
-                      <th>Actions</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <% table.columns.forEach(function(column) { %>
-                    <tr>
-                      <th><%= column.column_id %></th>
-                      <th><%= column.column_name %></th>
-                      <th><%= column.data_type %></th>
-                      <th><%= column.max_length %></th>
-                      <th><%= column.precision %></th>
-                      <th>Actions</th>
-                    </tr>
-                    <% }); %>
-                  </tbody>
+                  <% table.columns.forEach(function(column) { %>
+                  <tr>
+                    <td><%= column.column_name %>
+                      (<%= column.data_type %><%= column.column_lenght ? "("+column.column_lenght+")" : "" %>,
+                      <%= column.column_isnull ? "NOT NULL" : "NULL" %>)</td>
+                  </tr>
+                  <% }); %>
                 </table>
               </div>
               <!-- end content-->

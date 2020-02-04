@@ -62,7 +62,23 @@ const databaseSchema = new Schema({
                 precision: {
                     type: String,
                     require: true
-                }
+                },
+                column_isnull: {
+                    type: String,
+                    require: true
+                },
+                column_lenght: {
+                    type: String,
+                    require: false
+                },
+                table_create_date: {
+                    type: String,
+                    require: true
+                },
+                table_modify_date: {
+                    type: String,
+                    require: true
+                },
             }]
         }
     ],
