@@ -48,6 +48,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     navActiveStatus();
 });
 
+const toBoolean = (value) => {
     if (value && value.toLowerCase() === 'true') return true;
 
     return false;
