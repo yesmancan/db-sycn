@@ -49,7 +49,7 @@ router.post('/api/add', async (req, res) => {
     const database = new Database({
         dbName: req.body.dbName,
         dbType: req.body.dbType,
-        dbConnectionString: {
+        DatabaseConfig: {
             user: req.body.dbConnectionString_user,
             password: req.body.dbConnectionString_password,
             server: req.body.dbConnectionString_server,
@@ -64,7 +64,26 @@ router.post('/api/add', async (req, res) => {
         res.status(400).send(err);
     }
 });
+router.post('/api/update/:dbId', async (req, res) => {
+    let database = await Database.findOne({ _id: req.params.dbId, status: 1 });
+    try {
+        database.dbName = req.body.dbName;
+        database.dbType = req.body.dbType;
+        database.DatabaseConfig.user = req.body.dbConnectionString_user;
+        database.DatabaseConfig.password = req.body.dbConnectionString_password;
+        database.DatabaseConfig.server = req.body.dbConnectionString_server;
+        database.DatabaseConfig.database = req.body.dbConnectionString_database;
 
+        Database.updateOne({ _id: req.params.dbId, status: 1 }, database, function (err, doc) {
+            if (err) return res.send(500, { error: err });
+            return res.send(doc);
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+});
 router.post('/api/delete/:dbId', async (req, res) => {
     try {
         const query = { _id: req.params.dbId };

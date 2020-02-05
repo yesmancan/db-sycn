@@ -18,25 +18,67 @@
           <div class="col-lg-12 col-md-12">
             <div class="row">
               <% results.forEach(function(r) { %>
-              <div class="col-md-3" data-id="<%= r._id %>" id="base-db">
+              <div class="col-md-3" data-id="<%= r._id %>" id="base-db" data-readonly-open="true">
                 <div class="card">
-                  <div class="card-header">
-                    <h5 class="card-title"><%= r.dbName %></h5>
-                  </div>
-                  <div class="card-body ">
-                    <div class="form-group">
-                      <label for="dbType">Database Type</label>
-                      <br>
-                      <select class="selectpicker" data-size="2" id="dbType" data-style="btn btn-warning btn-round"
-                        title="Single Select">
-                        <option disabled>DB TYPE</option>
-                        <option value="MSSQL" selected>MSSQL</option>
-                      </select>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12 mr-auto ml-auto">
+                        <div class="form-group">
+                          <p class="category mb-1">Database Config Name</p>
+                          <input type="text" id="dbName" class="form-control" value="<%= r.dbName %>"
+                            placeholder="database name" readonly="">
+                        </div>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="dbConnectionString">Connection String</label>
-                      <textarea class="form-control" id="dbConnectionString" rows="3" style="max-height: 250px;"
-                        readonly><%= r.dbConnectionString %></textarea>
+                    <div class="row">
+                      <div class="col-md-12 mr-auto ml-auto">
+                        <div class="form-group">
+                          <p class="category mb-1">User Name</p>
+                          <input type="text" class="form-control" id="dbConnectionString_user"
+                            value="<%= r.DatabaseConfig.user %>" placeholder="user" readonly="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 mr-auto ml-auto">
+                        <div class="form-group">
+                          <p class="category mb-1">Password</p>
+                          <input type="password" class="form-control" id="dbConnectionString_password"
+                            value="<%= r.DatabaseConfig.password %>" placeholder="user" readonly="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 mr-auto ml-auto">
+                        <div class="form-group">
+                          <p class="category mb-1">Server Address</p>
+                          <input type="text" class="form-control" id="dbConnectionString_server" placeholder="server"
+                            value="<%= r.DatabaseConfig.server %>" readonly="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 mr-auto ml-auto">
+                        <div class="form-group">
+                          <p class="category mb-1">Database Name</p>
+                          <input type="text" class="form-control" id="dbConnectionString_database"
+                            value="<%= r.DatabaseConfig.database %>" placeholder="database" readonly="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <select class="selectpicker" id="dbType" data-style="btn btn-warning btn-round"
+                          title="Single Select">
+                          <option disabled>DB TYPE</option>
+                          <option value="MSSQL" selected>MSSQL</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <button class="btn btn-success" onclick="updateDb()">
+                          Update
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -48,3 +48,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     navActiveStatus();
 });
 
+    if (value && value.toLowerCase() === 'true') return true;
+
+    return false;
+}

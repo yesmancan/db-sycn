@@ -7,7 +7,11 @@ const enums = {
     },
     routes: {
         'Login': '/login',
-        'Dashboard':'/',
-        'Home':'/'
+        'Dashboard': '/',
+        'Home': '/'
+    },
+    element_data_attribute: {
+        'data_id': 'data-id',
+        'readonly_open': 'data-readonly-open'
     }
 }
