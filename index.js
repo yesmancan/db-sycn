@@ -6,14 +6,6 @@ const parser = require('body-parser');
 const path = require('path')
 const cors = require('cors');
 
-const Airbrake = require('@airbrake/node');
-const airbrakeExpress = require('@airbrake/node/dist/instrumentation/express');
-const airbrake = new Airbrake.Notifier({
-  projectId: 259049,
-  projectKey: 'e0cfdd7633213ca3f056bde843962721',
-  environment: 'production',
-});
-
 const PORT = process.env.PORT || 5000
 
 require('dotenv/config');
@@ -23,8 +15,6 @@ const app = express()
   .use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: true, resave: true }))
   .use(parser.json())
   .use(cors())
-  .use(airbrakeExpresss.makeMiddleware(airbrake))
-  .use(airbrakeExpress.makeErrorHandler(airbrake))
   // .use(cors({ origin: ['http://localhost:5000/', 'https://sync-database.herokuapp.com/'] }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs');
