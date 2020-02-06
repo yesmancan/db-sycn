@@ -1,5 +1,6 @@
 const cool = require('cool-ascii-faces');
 const express = require('express');
+const session = require('express-session');
 const mongoose = require('mongoose');
 const parser = require('body-parser');
 const path = require('path')
@@ -11,13 +12,14 @@ require('dotenv/config');
 
 const app = express()
   .use(express.static(path.join(__dirname, 'public')))
+  .use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: true, resave: true }))
   .use(parser.json())
-  .use(cors())
+  // .use(bodyParser.urlencoded({ extended: true }))
+  .use(cors({ origin: ['http://localhost:5000/', 'https://sync-database.herokuapp.com/'] }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs');
 
 //Middlewares
-
 
 //Import Routes
 const postsRoute = require('./routes/posts');

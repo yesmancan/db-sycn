@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
+let session = { login: false, token: null };
 const _auth = (req, res, next) => {
     const token = req.header('auth-token');
-    if (!token) return res.status(401).send('Access Denied');
+    if (!token) res.redirect('/login');
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
@@ -12,12 +14,33 @@ const _auth = (req, res, next) => {
         res.status(400).send('Invalid Token');
     }
 }
-
+const _auth_session = (req, res, next) => {
+    if (session.login) {
+        if (session.token) {
+            const token = res.setHeader('auth-token', session.token)
+            next();
+        } else {
+            res.redirect('/login');
+        }
+    } else {
+        res.redirect('/login');
+    }
+}
 const _generateAccessToken = (user) => {
-    return jwt.sign({ id: user._id }, process.env.TOKEN_SECRET, {
+    const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET, {
         expiresIn: '24h'
-    })
+    });
+    session.login = true;
+    session.token = token;
+    return token;
+}
+
+const _controlPass = async (req_pass, user_pass) => {
+    return await bcrypt.compare(req_pass, user_pass);
 }
 
 module.exports.verify = _auth;
+module.exports.verifySession = _auth_session;
+
 module.exports.generateAccessToken = _generateAccessToken;
+module.exports.controlPass = _controlPass;

@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { registerValidation, loginValidation } = require('../validation');
-const { generateAccessToken } = require('./verifyToken');
+const { generateAccessToken, controlPass } = require('./verifyToken');
 
 router.post('/register', async (req, res) => {
 
@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
     if (!user) return res.status(400).send({ 'data': 'Email is not found' });
 
     //Password is correct
-    const validPass = await bcrypt.compare(req.body.password, user.password);
+    const validPass = await controlPass(req.body.password, user.password);
     if (!validPass) return res.status(400).send({ 'data': 'Invalid password' });
 
     const token = generateAccessToken(user);

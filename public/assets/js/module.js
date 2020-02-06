@@ -15,7 +15,7 @@ const send = async (url = '', type = enums.types.GET, data = {}) => {
 }
 
 const setToken = (token) => {
-    localStorage.setItem('token', token);
+    localStorage.setItem('token', JSON.stringify(token));
 }
 
 const redirect = (routes) => {

@@ -1,15 +1,14 @@
 const router = require('express').Router();
 const sql = require('mssql')
 
-const { verify } = require('./verifyToken');
+const { verify, verifySession } = require('./verifyToken');
 const { gettableandcolumnlist } = require('./queries');
 const Database = require('../models/Database')
 
-router.get('/', async (req, res) => {
+router.get('/', verifySession, async (req, res) => {
     const databases = await Database.find({ status: 1 });
     try {
         const results = { 'results': (databases) ? databases : null };
-        console.log(results)
         res.render('pages/views-db/index', results);
     } catch (err) {
         console.error(err);
