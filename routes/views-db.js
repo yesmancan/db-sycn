@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const sql = require('mssql')
 
-const { verify, verifySession } = require('./verifyToken');
-const { gettableandcolumnlist } = require('./queries');
+const { verify, verifySession } = require('../modules/verifyToken');
+const { gettableandcolumnlist } = require('../modules/queries');
 const Database = require('../models/Database')
 
 router.get('/', verifySession, async (req, res) => {

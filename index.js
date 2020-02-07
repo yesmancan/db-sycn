@@ -8,6 +8,8 @@ const cors = require('cors');
 
 const PORT = process.env.PORT || 5000
 
+const { verifySession } = require('./modules/verifyToken');
+
 require('dotenv/config');
 
 const app = express()
@@ -30,7 +32,7 @@ app.use('/posts', postsRoute);
 app.use('/api/user', authRoute);
 app.use('/database', viewsDbRoute);
 
-app.get('/', (req, res) => res.render('pages/index'))
+app.get('/', verifySession, (req, res) => res.render('pages/index'))
 
 app.get('/login', (req, res) => res.render('pages/auth/login'));
 app.get('/register', (req, res) => res.render('pages/auth/register'));
