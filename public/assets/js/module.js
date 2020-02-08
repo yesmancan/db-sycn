@@ -1,15 +1,19 @@
 
-const send = async (url = '', type = enums.types.GET, data = {}) => {
-
-    const response = await fetch(url, {
+const send = async (url = '', type, data) => {
+    let config = {
         method: type,
         mode: 'cors',
         cache: 'no-cache',
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'same-origin',
-        body: JSON.stringify(data)
-    })
+    };
+
+    if (String(type) === enums.types.POST) {
+        config.body = JSON.stringify(data);
+    }
+
+    const response = await fetch(url, config);
     return await response.json();
 
 }
@@ -44,9 +48,20 @@ const navActiveStatus = () => {
     }
 }
 
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', async (event) => {
     navActiveStatus();
+    await getCoolStuff();
 });
+
+const getCoolStuff = async () => {
+    const coolstuff = document.getElementById('cool-stuff');
+    if (coolstuff) {
+        await send('/cool', enums.types.GET, null)
+            .then((data) => {
+                document.getElementById('cool-stuff').innerHTML = data;
+            });
+    }
+}
 
 const toBoolean = (value) => {
     if (value && value.toLowerCase() === 'true') return true;

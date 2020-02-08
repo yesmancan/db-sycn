@@ -134,3 +134,29 @@ const updateDb = () => {
       base_db.setAttribute(enums.element_data_attribute.readonly_open, true);
     });
 }
+
+const collepse = (item) => {
+  const root = item.parentElement;
+  if (root) {
+    const rootstep = root.getAttribute('data-collepse')
+    if (toBoolean(rootstep)) {
+      let neighbor = root.nextElementSibling;
+      while (neighbor) {
+        neighbor.classList.remove('hide');
+        neighbor = neighbor.nextElementSibling;
+      }
+      root.setAttribute('data-collepse', false);
+      item.classList.remove('yes-expand-icon');
+      item.classList.add('yes-collepse-icon');
+    } else {
+      let neighbor = root.nextElementSibling;
+      while (neighbor) {
+        neighbor.classList.add('hide');
+        neighbor = neighbor.nextElementSibling;
+      }
+      root.setAttribute('data-collepse', true);
+      item.classList.add('yes-expand-icon');
+      item.classList.remove('yes-collepse-icon');
+    }
+  }
+}

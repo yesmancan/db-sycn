@@ -18,10 +18,11 @@ const userSchema = mongoose.Schema({
         require: true,
         max: 1024,
         min: 6
-    }, date: {
+    },
+    date: {
         type: Date,
         default: Date.now
-    },
+    }
 });
 
 module.exports = mongoose.model('User', userSchema)

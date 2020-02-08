@@ -10,6 +10,10 @@ const enums = {
         'Dashboard': '/',
         'Home': '/'
     },
+    contenttype: {
+        json: 'application/json',
+        text: 'text/html'
+    },
     element_data_attribute: {
         'data_id': 'data-id',
         'readonly_open': 'data-readonly-open'

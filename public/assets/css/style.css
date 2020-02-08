@@ -1,0 +1,112 @@
+.show-password{
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    top: 0;
+    font-size: 16px;
+    width: 17px;
+    opacity: .5;
+    z-index: 99999;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.show-password:hover{
+    cursor: pointer;
+}
+/* yes icon*/
+.yes-icon{
+    width: 25px;
+    height: 25px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.yes-icon-1x{
+    width: 10px;
+    height: 10px;
+}
+.yes-icon-2x{
+    width: 20px;
+    height: 20px;
+}
+.yes-icon-3x{
+    width: 30px;
+    height: 30px;
+}
+
+.yes-server-icon{
+    background-image: url(/assets/icons/png/server-100.png);
+}
+.yes-database-icon{
+    background-image: url(/assets/icons/png/database-100.png);
+}
+
+.yes-opened-folder-icon{
+    background-image: url(/assets/icons/png/opened-folder-100.png);
+}
+.yes-table-icon{
+    background-image: url(/assets/icons/png/table-100.png);
+}
+.yes-column-icon{
+    background-image: url(/assets/icons/png/grid-100.png);
+}
+.yes-collepse-icon{
+    background-image: url(/assets/icons/png/expand-arrow-100.png);
+    transform: rotate(180deg)
+}
+.yes-expand-icon{
+    background-image: url(/assets/icons/png/expand-arrow-100.png);
+}
+/* END yes icon */
+.server {
+    background-color: #fff;
+    padding: 12px 10px;
+    margin: 2px 7px;
+    border-radius: 5px;
+}
+.server .server-name,
+.database .database-name,
+.tables .tables-name,
+.table .table-name,
+.columns .columns-name,
+.column .column-name{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    flex-flow: row;
+    justify-items: center;
+    justify-self: center;
+}
+
+.database .database-name{
+    justify-content: flex-start;
+    padding-left: 25px;
+}
+.tables .tables-name{
+    justify-content: flex-start;
+    padding-left: 50px;
+}
+.server .table {
+    margin-bottom: 0;
+}
+.table .table-name{
+    justify-content: flex-start;
+    padding-left: 75px;
+}
+.columns .columns-name{
+    justify-content: flex-start;
+    padding-left: 100px;
+}
+.column .column-name{
+    justify-content: flex-start;
+    padding-left: 125px;
+}
+.hide{
+    display: none;
+}
