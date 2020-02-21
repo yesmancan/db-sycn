@@ -29,11 +29,7 @@ const app = express()
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    store: new redisStore({
-      address:process.env.REDIS_URL,
-      client: client,
-      ttl: 260
-    }),
+    store: new RedisStore({ client }),
     cookie: { secure: false }
   }))
   .use(parser.json())
