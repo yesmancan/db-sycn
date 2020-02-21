@@ -30,7 +30,7 @@ const app = express()
     saveUninitialized: false,
     resave: false,
     store: new redisStore({
-      host: process.env.REDIS_URL,
+      address:process.env.REDIS_URL,
       client: client,
       ttl: 260
     }),
