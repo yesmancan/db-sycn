@@ -30,8 +30,7 @@ const app = express()
     saveUninitialized: false,
     resave: false,
     store: new redisStore({
-      host: '127.0.0.1',
-      port: 6379,
+      host: process.env.REDIS_URL,
       client: client,
       ttl: 260
     }),
