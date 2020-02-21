@@ -7,6 +7,15 @@ const path = require('path')
 const cors = require('cors');
 const cron = require('node-cron');
 
+const redis = require('redis');
+const redisStore = require('connect-redis')(session);
+const client = redis.createClient();
+
+
+client.on('error', (err) => {
+  console.log('Redis error: ', err);
+});
+
 const PORT = process.env.PORT || 5000
 
 const { verifySession } = require('./modules/verifyToken');
@@ -15,10 +24,23 @@ require('dotenv/config');
 
 const app = express()
   .use(express.static(path.join(__dirname, 'public')))
-  .use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: true, resave: true }))
+  .use(session({
+    key: '_user',
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false,
+    store: new redisStore({
+      host: '127.0.0.1',
+      port: 6379,
+      client: client,
+      ttl: 260
+    }),
+    cookie: { secure: false }
+  }))
   .use(parser.json())
   .use(cors())
   // .use(cors({ origin: ['http://localhost:5000/', 'https://sync-database.herokuapp.com/'] }))
+  .set('trust proxy', 1)
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs');
 
@@ -38,9 +60,7 @@ app.use('/database', viewsDbRoute);
 app.use('/sycn', sycnRoute);
 app.use('/group', groupRoute);
 
-app.get('/',
-  verifySession,
-  (req, res) => res.render('pages/index'))
+app.get('/', verifySession, async (req, res) => res.render('pages/index'))
 
 app.get('/login', (req, res) => res.render('pages/auth/login'));
 app.get('/register', (req, res) => res.render('pages/auth/register'));

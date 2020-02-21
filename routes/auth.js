@@ -53,6 +53,8 @@ router.post('/login', async (req, res) => {
     if (!validPass) return res.status(400).send({ 'data': 'Invalid password' });
 
     const token = generateAccessToken(user);
+    req.session._user = { login: true, token: token, user: user };
+    req.session.save();
     res.status(200)
         .header('auth-token', token)
         .send({

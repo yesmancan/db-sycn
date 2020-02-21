@@ -15,16 +15,18 @@ const _auth = (req, res, next) => {
     }
 }
 const _auth_session = (req, res, next) => {
-    if (session.login) {
-        if (session.token) {
-            const token = res.setHeader('auth-token', session.token)
-            next();
-        } else {
-            res.redirect('/login');
+    if (req.session._user) {
+        if (req.session._user.login) {
+            if (req.session._user.token) {
+                if (req.session._user.user) {
+                    const token = res.setHeader('auth-token', req.session._user.token)
+                    return next();
+                }
+            }
         }
-    } else {
-        res.redirect('/login');
     }
+
+    res.redirect('/login');
 }
 const _generateAccessToken = (user) => {
     const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET, {

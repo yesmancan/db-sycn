@@ -19,8 +19,11 @@
             <div class="row">
               <% results.forEach(function(r) { %>
               <div class="server card" data-id="<%= r._id %>">
+                
+                <input class="bootstrap-switch" type="checkbox" data-toggle="switch" checked data-on-color="default" data-off-color="default" data-on-label="Main" data-off-label="Sycn">
+
                 <div class="server-name" data-collepse="false">
-                  <i class="yes-icon yes-server-icon"></i>
+                  <i class="fas fa-server"></i>
                   <div><%= r.DatabaseConfig.server %> (<%= r.DatabaseConfig.database %>)</div>
                   <i class="yes-icon yes-collepse-icon yes-icon-2x ml-1" onclick="collepse(this)"></i>
                 </div>
