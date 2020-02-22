@@ -1,6 +1,10 @@
 const cool = require('cool-ascii-faces');
+
+require('dotenv/config');
+
 const express = require('express');
 const session = require('express-session');
+
 const mongoose = require('mongoose');
 const parser = require('body-parser');
 const path = require('path')
@@ -9,10 +13,12 @@ const cron = require('node-cron');
 
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
-const client = redis.createClient();
 
+const redisClient = redis.createClient(process.env.REDIS_URL);
 
-client.on('error', (err) => {
+const TWO_HOURS = 1000 * 60 * 60 * 2;
+
+redisClient.on('error', (err) => {
   console.log('Redis error: ', err);
 });
 
@@ -20,17 +26,21 @@ const PORT = process.env.PORT || 5000
 
 const { verifySession } = require('./modules/verifyToken');
 
-require('dotenv/config');
 
 const app = express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(session({
     key: '_user',
+    name: 'sid',
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    store: new RedisStore({ client }),
-    cookie: { secure: false }
+    store: new redisStore({ client: redisClient }),
+    cookie: {
+      maxAge: TWO_HOURS,
+      secure: false,
+      sameSite: true,
+    }
   }))
   .use(parser.json())
   .use(cors())
