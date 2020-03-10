@@ -6,7 +6,8 @@ const { gettableandcolumnlist } = require('../modules/queries');
 const Database = require('../models/Database')
 
 router.get('/', verifySession, async (req, res) => {
-    const databases = await Database.find({ status: 1 });
+    const databases = await Database.find({ status: 1 }).select('-Tables');
+
     try {
         const results = { 'results': (databases) ? databases : null };
         res.render('pages/views-db/index', results);
@@ -26,6 +27,18 @@ router.get('/:dbId', async (req, res) => {
         res.send("Error " + err);
     }
 });
+
+router.get('/api/dbs/', verifySession, async (req, res) => {
+    //Get Select Element
+    const databases = await Database.find({ status: 1 }).select('dbName dbType');
+    try {
+        res.json(databases);
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+});
+
 
 router.post('/api/init/:dbId', async (req, res) => {
     let database = await Database.findOne({ _id: req.params.dbId, status: 1 });

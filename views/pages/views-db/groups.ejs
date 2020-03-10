@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../partials/header.ejs %>
+</head>
+
+<body>
+  <div class="wrapper ">
+    <% include ../../partials/sidebar.ejs %>
+
+    <div class="main-panel ps-container ps-theme-default ps-active-y">
+      <!-- Navbar -->
+      <% include ../../partials/navbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#noticeModal">Create Group</button>
+          </div>
+          <div class="col-lg-12 col-md-12">
+            <div class="row">
+              <% results.forEach(function(r) { %>
+              <div class="server card" data-id="<%= r._id %>">
+
+                <input class="bootstrap-switch" type="checkbox" data-toggle="switch" checked data-on-color="default"
+                  data-off-color="default" data-on-label="Main" data-off-label="Sycn">
+
+                <div class="server-name" data-collepse="false">
+                  <i class="fas fa-server"></i>
+                  <div><%= r.DatabaseConfig.server %> (<%= r.DatabaseConfig.database %>)</div>
+                  <i class="yes-icon yes-collepse-icon yes-icon-2x ml-1" onclick="collepse(this)"></i>
+                </div>
+                <div class="database">
+                  <div class="database-name" data-collepse="false">
+                    <i class="yes-icon yes-database-icon"></i>
+                    <div><%= r.DatabaseConfig.database %></div>
+                    <i class="yes-icon yes-collepse-icon yes-icon-2x ml-1" onclick="collepse(this)"></i>
+                  </div>
+                  <div class="tables">
+                    <div class="tables-name" data-collepse="false">
+                      <i class="yes-icon yes-opened-folder-icon"></i>
+                      <div>Tables</div>
+                      <i class="yes-icon yes-collepse-icon yes-icon-2x ml-1" onclick="collepse(this)"></i>
+                    </div>
+                    <% r.Tables.forEach(function(table) { %>
+                    <div class="table">
+                      <div class="table-name" data-collepse="false">
+                        <i class="yes-icon yes-table-icon"></i>
+                        <div><%= table.schema_name %>.<%= table.table_name %></div>
+                        <i class="yes-icon yes-collepse-icon yes-icon-2x ml-1" onclick="collepse(this)"></i>
+                      </div>
+                      <div class="columns">
+                        <div class="columns-name" data-collepse="false">
+                          <i class="yes-icon yes-opened-folder-icon"></i>
+                          <div>Columns</div>
+                          <i class="yes-icon yes-collepse-icon yes-icon-2x ml-1" onclick="collepse(this)"></i>
+                        </div>
+                        <% table.columns.forEach(function(column) { %>
+                        <div class="column">
+                          <div class="column-name">
+                            <i class="yes-icon yes-column-icon mr-1"></i>
+                            <div>
+                              <%= column.column_name %>
+                              (<%= column.data_type %><%= column.column_lenght ? "("+column.column_lenght+")" : "" %>,
+                              <%= column.column_isnull ? "NOT NULL" : "NULL" %>)
+                            </div>
+                          </div>
+                        </div>
+                        <% }); %>
+                      </div>
+                    </div>
+                    <% }); %>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% include ../../partials/footer.ejs %>
+    </div>
+  </div>
+  <% include ../../partials/sidebar-background.ejs %>
+  <% include ../../partials/footer-js-core.ejs %>
+  <%- include('../../partials/modals/notice-modal.ejs', {modaltype: 'noticeModal', contenttype: 'createGroup'}) %>
+
+  <script src="/assets/js/enums.js" defer></script>
+  <script src="/assets/js/module.js" defer></script>
+  <script src="/assets/js/group/group.js" defer></script>
+
+</body>
+
+</html>

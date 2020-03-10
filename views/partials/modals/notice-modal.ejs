@@ -1,0 +1,32 @@
+<% if(modaltype === 'noticeModal'){%>
+<!-- notice modal -->
+<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myNoticeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-notice">
+    <div class="modal-content">
+
+      <% if(contenttype){%>
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="nc-icon nc-simple-remove"></i>
+        </button>
+        <h5 class="modal-title" id="myModalLabel">Create Group</h5>
+      </div>
+      <div class="modal-body"  id="include-body"></div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-success">
+          <span class="btn-label">
+            <i class="nc-icon nc-check-2"></i>
+          </span>
+          Save
+        </button>
+        <button class="btn btn-danger" data-dismiss="modal">
+          <i class="nc-icon nc-simple-remove"></i> Cancel
+        </button>
+      </div>
+      <% }%>
+    </div>
+  </div>
+</div>
+<!-- end notice modal -->
+<% }%>

@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const groupSchema = new Schema({
+    dbID: {
+        type: String,
+        require: true
+    },
     dbName: {
         type: String,
         require: true

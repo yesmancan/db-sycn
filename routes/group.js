@@ -3,13 +3,14 @@ const sql = require('mssql')
 
 const { verify, verifySession } = require('../modules/verifyToken');
 const { gettableandcolumnlist } = require('../modules/queries');
-const Database = require('../models/Database')
+
+const Group = require('../models/Group')
 
 router.get('/', verifySession, async (req, res) => {
-    const databases = await Database.find({ status: 1 });
+    const groups = await Group.find({ status: 1 });
     try {
-        const results = { 'results': (databases) ? databases : null };
-        res.render('pages/views-db/index', results);
+        const results = { 'results': (groups) ? groups : null };
+        res.render('pages/views-db/groups', results);
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
@@ -102,67 +103,4 @@ router.post('/api/delete/:dbId', async (req, res) => {
     }
 });
 
-
-const GetTableList = async (config) => {
-    try {
-        await sql.connect({
-            user: config.user,
-            password: config.password,
-            server: config.server,
-            database: config.database,
-            options: {
-                enableArithAbort: true,
-                tedious: true
-            }
-        });
-
-        return (await sql.query(gettableandcolumnlist)).recordset;
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
-}
-
-const ReLoadTable = async (result, database) => {
-    database.Tables = [];
-    for (let i = 0; i < result.length; i++) {
-        const element = result[i];
-        const table = database.Tables.filter(x => x.schema_name === element.schema_name && x.table_name === element.table_name);
-        if (table === null || table.length === 0) {
-            const _table = {
-                schema_name: element.schema_name,
-                table_name: element.table_name,
-                columns: [{
-                    column_id: element.column_id,
-                    column_name: element.column_name,
-                    column_isnull: element.column_isnull,
-                    column_lenght: element.column_lenght,
-                    data_type: element.data_type,
-                    max_length: element.max_length,
-                    precision: element.precision,
-                    table_create_date: element.table_create_date,
-                    table_modify_date: element.table_modify_date
-                }]
-            }
-            database.Tables.push(_table);
-        } else {
-            table[0].columns.push({
-                column_id: element.column_id,
-                column_name: element.column_name,
-                column_isnull: element.column_isnull,
-                column_lenght: element.column_lenght,
-                data_type: element.data_type,
-                max_length: element.max_length,
-                precision: element.precision,
-                table_create_date: element.table_create_date,
-                table_modify_date: element.table_modify_date
-            });
-        }
-    }
-    if (database.lastUpdate) {
-        database.lastUpdate = (new Date).toLocaleDateString() + ' ' + (new Date).toLocaleTimeString();
-        console.log(database.lastUpdate)
-    }
-    return database;
-}
 module.exports = router;
