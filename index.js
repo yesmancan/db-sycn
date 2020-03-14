@@ -26,7 +26,6 @@ const PORT = process.env.PORT || 5000
 
 const { verifySession } = require('./modules/verifyToken');
 
-
 const app = express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(session({
@@ -98,6 +97,7 @@ app.use((req, res, next) => {
 
   // default to plain-text. send()
   res.type('txt').send('Not found');
-})
+});
+
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 

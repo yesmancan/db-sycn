@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const sql = require('mssql')
+const assert = require('assert').strict;
 
 const { verify, verifySession } = require('../modules/verifyToken');
 const { gettableandcolumnlist } = require('../modules/queries');
 
-const Group = require('../models/Group')
+const Group = require('../models/Group');
 
 router.get('/', verifySession, async (req, res) => {
     const groups = await Group.find({ status: 1 });
@@ -46,20 +47,12 @@ router.post('/api/init/:dbId', async (req, res) => {
 });
 
 router.post('/api/add', async (req, res) => {
-    const database = new Database({
-        dbName: req.body.dbName,
-        dbType: req.body.dbType,
-        DatabaseConfig: {
-            user: req.body.dbConnectionString_user,
-            password: req.body.dbConnectionString_password,
-            server: req.body.dbConnectionString_server,
-            database: req.body.dbConnectionString_database,
-        }
+    const group = new Group({
+        dbIds: req.body.dbIds
     });
-
     try {
-        const savedDatabase = await database.save();
-        res.json(savedDatabase);
+        const savedGroup = await group.save();
+        res.json(savedGroup);
     } catch (err) {
         res.status(400).send(err);
     }
