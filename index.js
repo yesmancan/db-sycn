@@ -101,6 +101,7 @@ app.use((req, res, next) => {
 
   // default to plain-text. send()
   res.type('txt').send('Not found');
-})
+});
+
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
