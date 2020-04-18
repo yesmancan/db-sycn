@@ -160,3 +160,11 @@ const collepse = (item) => {
     }
   }
 }
+
+const sycnOnlyOneActive = () => {
+  const checkboxs = document.querySelectorAll('.server-sycn-status:checked');
+
+  if (checkboxs.length > 1) {
+    alert('only one database can be active')
+  }
+}

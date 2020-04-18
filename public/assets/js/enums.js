@@ -17,5 +17,8 @@ const enums = {
     element_data_attribute: {
         'data_id': 'data-id',
         'readonly_open': 'data-readonly-open'
+    },
+    localstorage: {
+        'token': 'token'
     }
 }

@@ -17,10 +17,13 @@
         <div class="row">
           <div class="col-lg-12 col-md-12">
             <div class="row">
+              <button type="submit" class="btn btn-info btn-round">Submit</button>
+            </div>
+            <div class="row">
               <% results.forEach(function(r) { %>
               <div class="server card" data-id="<%= r._id %>">
                 
-                <input class="bootstrap-switch" type="checkbox" data-toggle="switch" checked data-on-color="default" data-off-color="default" data-on-label="Main" data-off-label="Sycn">
+                <input class="bootstrap-switch server-sycn-status" type="checkbox" data-toggle="switch"  data-on-color="default" data-off-color="default" data-on-label="Main" data-off-label="Sycn">
 
                 <div class="server-name" data-collepse="false">
                   <i class="fas fa-server"></i>
@@ -69,6 +72,7 @@
                     <% }); %>
                   </div>
                 </div>
+
               </div>
               <% }); %>
             </div>

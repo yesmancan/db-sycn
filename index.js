@@ -13,6 +13,7 @@ const cron = require('node-cron');
 
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
+var memoryStore = require('memorystore')(session)
 
 const redisClient = redis.createClient(process.env.REDIS_URL);
 
@@ -26,7 +27,6 @@ const PORT = process.env.PORT || 5000
 
 const { verifySession } = require('./modules/verifyToken');
 
-
 const app = express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(session({
@@ -35,7 +35,10 @@ const app = express()
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    store: new redisStore({ client: redisClient }),
+    // store: new redisStore({ client: redisClient }),
+    store: new memoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
     cookie: {
       maxAge: TWO_HOURS,
       secure: false,

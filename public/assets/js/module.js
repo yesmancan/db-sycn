@@ -19,7 +19,7 @@ const send = async (url = '', type, data) => {
 }
 
 const setToken = (token) => {
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem(enums.localstorage.token, JSON.stringify(token));
 }
 
 const redirect = (routes) => {
@@ -33,7 +33,6 @@ const navActiveStatus = () => {
     for (let i = 0; i < link.length; i++) {
         const element = link[i];
         const href = element.querySelector('a').getAttribute('href');
-        console.log()
         element.classList.remove('active');
         if (href === path) {
             element.classList.add('active');
@@ -48,11 +47,6 @@ const navActiveStatus = () => {
     }
 }
 
-window.addEventListener('DOMContentLoaded', async (event) => {
-    navActiveStatus();
-    await getCoolStuff();
-});
-
 const getCoolStuff = async () => {
     const coolstuff = document.getElementById('cool-stuff');
     if (coolstuff) {
@@ -63,8 +57,26 @@ const getCoolStuff = async () => {
     }
 }
 
+//#region Init
+window.addEventListener('DOMContentLoaded', async (event) => {
+    navActiveStatus();
+    await getCoolStuff();
+});
+//#endregion Init
+
+//#region Global 
 const toBoolean = (value) => {
     if (value && value.toLowerCase() === 'true') return true;
 
     return false;
 }
+
+const initToogleButtonSwitch = () => {
+    $(".bootstrap-switch").each(function () {
+        $this = $(this);
+        data_on_label = $this.data("on-label") || "";
+        data_off_label = $this.data("off-label") || "";
+        $this.bootstrapSwitch({ onText: data_on_label, offText: data_off_label });
+    })
+}
+//#endregion Global Module
