@@ -12,8 +12,8 @@
     "ntart": "nodemon index.js"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.12.1",
-    "@hapi/joi": "^17.0.2",
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@hapi/joi": "^17.1.0",
     "bcryptjs": "^2.4.3",
     "connect-redis": "^4.0.4",
     "cool-ascii-faces": "^1.3.4",
@@ -23,10 +23,10 @@
     "express": "^4.15.2",
     "express-session": "^1.17.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.8.9",
+    "mongoose": "^5.8.11",
     "mssql": "^6.0.1",
     "node-cron": "^2.0.3",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.3",
     "redis": "^3.0.2"
   },
   "devDependencies": {
